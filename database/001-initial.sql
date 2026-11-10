@@ -1,0 +1,74 @@
+-- Estrutura futura para MySQL/MariaDB. Não executar em bancos existentes.
+CREATE TABLE IF NOT EXISTS prospector_users (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  email VARCHAR(190) NOT NULL UNIQUE,
+  password_hash VARCHAR(255) NOT NULL,
+  role ENUM('ADMIN','OPERADOR','LEITURA') NOT NULL DEFAULT 'OPERADOR',
+  active TINYINT(1) NOT NULL DEFAULT 1,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS prospector_companies (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  public_id CHAR(36) NOT NULL UNIQUE,
+  name VARCHAR(255) NOT NULL,
+  category VARCHAR(190) NULL,
+  city VARCHAR(190) NULL,
+  phone VARCHAR(40) NULL,
+  google_url TEXT NULL,
+  website TEXT NULL,
+  notes TEXT NULL,
+  whatsapp_valid ENUM('SIM','NAO','NAO_VERIFICADO') NOT NULL DEFAULT 'NAO_VERIFICADO',
+  audit_status ENUM('PENDENTE','CONCLUIDA') NOT NULL DEFAULT 'PENDENTE',
+  approval_status ENUM('PENDENTE','APROVADO','BLOQUEADO') NOT NULL DEFAULT 'PENDENTE',
+  stage VARCHAR(60) NOT NULL DEFAULT 'NOVO',
+  no_contact TINYINT(1) NOT NULL DEFAULT 0,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  INDEX idx_company_name (name),
+  INDEX idx_company_stage (stage),
+  INDEX idx_company_phone (phone)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS prospector_audits (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  company_id BIGINT UNSIGNED NOT NULL,
+  fact TEXT NOT NULL,
+  audit_notes TEXT NULL,
+  message_suggested TEXT NOT NULL,
+  score_space TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  score_profile TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  score_view360 TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  score_commercial TINYINT UNSIGNED NOT NULL DEFAULT 0,
+  created_by BIGINT UNSIGNED NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_audit_company FOREIGN KEY (company_id) REFERENCES prospector_companies(id),
+  CONSTRAINT fk_audit_user FOREIGN KEY (created_by) REFERENCES prospector_users(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS prospector_consents (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  company_id BIGINT UNSIGNED NOT NULL,
+  status ENUM('SIM','NAO','PENDENTE') NOT NULL DEFAULT 'PENDENTE',
+  source VARCHAR(255) NULL,
+  consent_date DATE NULL,
+  message_approved TEXT NULL,
+  created_by BIGINT UNSIGNED NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  CONSTRAINT fk_consent_company FOREIGN KEY (company_id) REFERENCES prospector_companies(id),
+  CONSTRAINT fk_consent_user FOREIGN KEY (created_by) REFERENCES prospector_users(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS prospector_events (
+  id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+  company_id BIGINT UNSIGNED NULL,
+  user_id BIGINT UNSIGNED NULL,
+  action VARCHAR(80) NOT NULL,
+  details JSON NULL,
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  INDEX idx_event_company_date (company_id, created_at),
+  CONSTRAINT fk_event_company FOREIGN KEY (company_id) REFERENCES prospector_companies(id),
+  CONSTRAINT fk_event_user FOREIGN KEY (user_id) REFERENCES prospector_users(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+

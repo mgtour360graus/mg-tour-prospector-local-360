@@ -1,0 +1,16 @@
+{
+  "name": "mg-tour-prospector-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "API isolada de homologação do Prospector Local MG Tour 360.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/server.mjs",
+    "check": "node --check src/server.mjs && node --check src/app.mjs && node --check src/store.mjs",
+    "test": "node --test"
+  }
+}
+
