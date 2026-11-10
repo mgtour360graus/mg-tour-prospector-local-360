@@ -1,0 +1,16 @@
+{
+  "name": "mg-tour-prospector-local-360",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Entrada do ambiente isolado de homologação da MG Tour.",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server/src/server.mjs",
+    "check": "npm --prefix server run check",
+    "test": "npm --prefix server test"
+  }
+}
+
