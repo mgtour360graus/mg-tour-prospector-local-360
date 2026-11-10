@@ -28,6 +28,7 @@ A aplicação funcional está em `app/`. Ela pode ser aberta por um servidor loc
 - Plataforma online: https://mgtour360graus.github.io/mg-tour-prospector-local-360/
 - Repositório: https://github.com/mgtour360graus/mg-tour-prospector-local-360
 - Relatório de testes: [docs/RELATORIO-TESTES-GITHUB-2026-11-10.md](docs/RELATORIO-TESTES-GITHUB-2026-11-10.md)
+- Status da homologação no servidor: [docs/STATUS-HOMOLOGACAO-SERVIDOR-2026-11-10.md](docs/STATUS-HOMOLOGACAO-SERVIDOR-2026-11-10.md)
 
 ## Fluxos entregues
 
