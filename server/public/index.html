@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Ambiente local de testes do Prospector MG Tour 360.">
+  <title>Prospector MG Tour 360 — Testes</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Navegação principal">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true">360°</div>
+        <div>
+          <strong>MG Tour</strong>
+          <span>Prospector Local</span>
+        </div>
+      </div>
+
+      <nav class="main-nav">
+        <button class="nav-item is-active" data-view="dashboard" type="button"><span aria-hidden="true">⌂</span> Visão geral</button>
+        <button class="nav-item" data-view="prospects" type="button"><span aria-hidden="true">◎</span> Prospectos</button>
+        <button class="nav-item" data-view="audit" type="button"><span aria-hidden="true">✓</span> Auditoria</button>
+        <button class="nav-item" data-view="approval" type="button"><span aria-hidden="true">✦</span> Aprovação</button>
+        <button class="nav-item" data-view="settings" type="button"><span aria-hidden="true">⚙</span> Configurações</button>
+      </nav>
+
+      <div class="sidebar-safety">
+        <span class="safety-dot" aria-hidden="true"></span>
+        <div>
+          <strong>Modo de testes</strong>
+          <p>Nenhuma mensagem real pode ser enviada.</p>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow" id="pageEyebrow">PAINEL OPERACIONAL</p>
+          <h1 id="pageTitle">Visão geral</h1>
+        </div>
+        <div class="topbar-actions">
+          <span class="test-badge"><span></span> Ambiente local</span>
+          <button class="button button-primary" id="newProspectButton" type="button">+ Novo prospecto</button>
+        </div>
+      </header>
+
+      <div class="notice notice-safe" role="status">
+        <div class="notice-icon" aria-hidden="true">✓</div>
+        <div>
+          <strong>Seu WhatsApp principal está protegido</strong>
+          <p>Esta plataforma não está conectada ao WhatsApp, à Evolution API nem a qualquer serviço de envio.</p>
+        </div>
+      </div>
+
+      <section id="viewRoot" class="view-root" aria-live="polite"></section>
+    </main>
+  </div>
+
+  <div class="modal-backdrop" id="prospectModal" hidden>
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <header class="modal-header">
+        <div>
+          <p class="eyebrow">CADASTRO LOCAL</p>
+          <h2 id="modalTitle">Novo prospecto</h2>
+        </div>
+        <button class="icon-button" id="closeModalButton" type="button" aria-label="Fechar">×</button>
+      </header>
+      <form id="prospectForm" class="form-grid">
+        <input type="hidden" name="id">
+        <label class="field field-span-2"><span>Nome da empresa *</span><input name="name" required autocomplete="organization" placeholder="Ex.: Clínica Exemplo"></label>
+        <label class="field"><span>Categoria</span><input name="category" placeholder="Ex.: Clínica odontológica"></label>
+        <label class="field"><span>Cidade/UF</span><input name="city" placeholder="Ex.: Maringá, PR"></label>
+        <label class="field"><span>Telefone comercial</span><input name="phone" inputmode="tel" placeholder="(44) 99999-9999"></label>
+        <label class="field"><span>WhatsApp verificado?</span><select name="whatsappValid"><option value="NAO_VERIFICADO">Não verificado</option><option value="SIM">Sim</option><option value="NAO">Não</option></select></label>
+        <label class="field field-span-2"><span>Link do Perfil da Empresa no Google</span><input name="googleUrl" type="url" placeholder="https://maps.google.com/…"></label>
+        <label class="field field-span-2"><span>Site</span><input name="website" type="url" placeholder="https://empresa.com.br"></label>
+        <label class="field field-span-2"><span>Observações iniciais</span><textarea name="notes" rows="3" placeholder="Registre apenas informações verificadas."></textarea></label>
+        <footer class="form-actions field-span-2">
+          <button class="button button-ghost" id="cancelModalButton" type="button">Cancelar</button>
+          <button class="button button-primary" type="submit">Salvar prospecto</button>
+        </footer>
+      </form>
+    </section>
+  </div>
+
+  <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+  <input id="importFile" type="file" accept="application/json,.json" hidden>
+  <script src="app.js"></script>
+</body>
+</html>

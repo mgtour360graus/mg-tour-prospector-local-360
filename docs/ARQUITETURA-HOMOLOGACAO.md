@@ -8,7 +8,7 @@ Endereço planejado: `prospector-teste.mgtour360.com.br`.
 
 ## Componentes
 
-1. A aplicação visual continua em `app/`.
+1. A aplicação visual principal continua em `app/`; uma cópia sincronizada para o empacotamento do cPanel fica em `server/public/`.
 2. A API Node.js está em `server/` e também entrega os arquivos visuais.
 3. O armazenamento de homologação começa em um arquivo JSON privado e isolado.
 4. O desenho do banco definitivo está em `database/001-initial.sql`, mas não deve ser executado em banco existente.

@@ -22,7 +22,7 @@ export function loadConfig(env = process.env) {
     sessionSecret: env.SESSION_SECRET || "",
     allowedOrigin: env.ALLOWED_ORIGIN || "",
     dataFile: projectPath(env.DATA_FILE, "./server/data/prospector-test.json"),
-    staticDir: projectPath(env.STATIC_DIR, "./app")
+    staticDir: projectPath(env.STATIC_DIR, "./server/public")
   };
 
   if (config.nodeEnv === "production") {
