@@ -1,4 +1,12 @@
 import path from "node:path";
+import { fileURLToPath } from "node:url";
+
+const projectRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "../..");
+
+function projectPath(value, fallback) {
+  const selected = value || fallback;
+  return path.isAbsolute(selected) ? selected : path.resolve(projectRoot, selected);
+}
 
 export function loadConfig(env = process.env) {
   const port = Number(env.PORT || 3000);
@@ -13,8 +21,8 @@ export function loadConfig(env = process.env) {
     adminPassword: env.ADMIN_PASSWORD || "",
     sessionSecret: env.SESSION_SECRET || "",
     allowedOrigin: env.ALLOWED_ORIGIN || "",
-    dataFile: path.resolve(env.DATA_FILE || "./data/prospector-test.json"),
-    staticDir: path.resolve(env.STATIC_DIR || "../app")
+    dataFile: projectPath(env.DATA_FILE, "./server/data/prospector-test.json"),
+    staticDir: projectPath(env.STATIC_DIR, "./app")
   };
 
   if (config.nodeEnv === "production") {
